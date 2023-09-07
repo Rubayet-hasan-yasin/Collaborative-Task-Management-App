@@ -2,13 +2,17 @@ import { FcGoogle } from "react-icons/fc";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import {useState} from "react"
+import {useContext, useState} from "react"
+import { imageUpload } from "../api/imageUpload";
+import { AuthContext } from "../Auth/AuthProvider";
+import { updateProfile } from "firebase/auth";
 
 
 
 
 const Register = () => {
     const [imgName, setImgName] = useState('Upload Image');
+    const {registerWithEmailAndPassword} = useContext(AuthContext);
 
     const { handleSubmit, register, reset, formState: { errors } ,setError } = useForm();
 
@@ -21,10 +25,42 @@ const Register = () => {
             })
         }
 
+        const img = data.photo[0];
+        const email = data.email;
+        const password = data.password;
+        const name = data.name;
 
-        console.log(data)
+        imageUpload(img)
+        .then(data=> {
+            const imgURL = data.data.display_url;
+
+            registerWithEmailAndPassword(email, password)
+            .then(result=>{
+                const user = result.user;
+                console.log(user);
+                if(user){
+                    updateProfile(user,{
+                        displayName: name,
+                        photoURL: imgURL,
+                    })
+                    .then(()=>{
+
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                    })
+                }
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+
+        });
+        //image response end
+        // console.log(data);
     }
 
+    console.log(errors)
 
 
     return (
@@ -65,7 +101,7 @@ const Register = () => {
                         <div className="mt-4">
                             <label className="block text-gray-700">Password</label>
                             <input
-                                {...register("password", {required: true})}
+                                {...register("password", {required: true, minLength: 6})}
                                 type="password"
                                 name="password" id=""
                                 placeholder="Enter Password"
@@ -75,7 +111,7 @@ const Register = () => {
                         <div className="mt-4">
                             <label className="block text-gray-700">Confirm Password</label>
                             <input
-                                {...register('confirmPassword', {required: true})}
+                                {...register('confirmPassword', {required: true, minLength: 6})}
                                 type="password"
                                 name="confirmPassword" id=""
                                 placeholder="Confirm Password"
@@ -100,6 +136,8 @@ const Register = () => {
                         </div>
 
                         {errors.confirmPassword && <p className="text-red-400 mt-3">{errors.confirmPassword.message}</p>}
+                        
+                        {(errors.password || errors.confirmPassword) && <p className="text-red-400 mt-3">Password should be at least 6 characters</p>}
 
                         <button type="submit" className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6">Log In</button>
                     </form>

@@ -1,9 +1,32 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../Auth/AuthProvider";
+import { useForm } from 'react-hook-form';
+
 
 
 const Login = () => {
+    const { logWithEmailAndPassword } = useContext(AuthContext);
+
+    const {register, handleSubmit, formState: {errors}} = useForm();
+
+    const onSubmit =data=>{
+        const email = data.email;
+        const password = data.password;
+
+        logWithEmailAndPassword(email, password)
+        .then((r)=>{
+            console.log(r.user)
+
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+
     return (
         // < !--component -- >
         <section className="flex flex-col md:flex-row h-screen items-center">
@@ -19,20 +42,36 @@ const Login = () => {
 
                     <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
 
-                    <form className="mt-6" action="#" method="POST">
+                    <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
                         <div>
                             <label className="block text-gray-700">Email Address</label>
-                            <input type="email" name="" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete required />
+
+                            <input
+                                type="email"
+                                {...register("email", {required: true})}
+                                name="email" id=""
+                                placeholder="Enter Email Address"
+                                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                            />
                         </div>
 
                         <div className="mt-4">
                             <label className="block text-gray-700">Password</label>
-                            <input type="password" name="" id="" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required />
+
+                            <input 
+                            type="password" 
+                            {...register('password', {required: true, minLength: 6})}
+                            name="password" id="" 
+                            placeholder="Enter Password"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" 
+                             />
                         </div>
 
                         <div className="text-right mt-2">
                             <a href="#" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
                         </div>
+
+                        {errors.password && <p className="text-red-400 mt-3">Password should be at least 6 characters</p>}
 
                         <button type="submit" className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6">Log In</button>
                     </form>
