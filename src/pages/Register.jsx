@@ -1,11 +1,32 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import {useState} from "react"
 
 
 
 
 const Register = () => {
+    const [imgName, setImgName] = useState('Upload Image');
+
+    const { handleSubmit, register, reset, formState: { errors } ,setError } = useForm();
+
+    const onSubmit = (data) => {
+        
+        if(data.password !== data.confirmPassword){
+            return setError("confirmPassword",{
+                
+                message: "Passwords do not match"
+            })
+        }
+
+
+        console.log(data)
+    }
+
+
+
     return (
         <section className="flex flex-col md:flex-row h-fit items-center p-10">
 
@@ -18,43 +39,72 @@ const Register = () => {
 
                     <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
 
-                    <form className="mt-6">
+                    <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
                         <div>
                             <label className="block text-gray-700">Name</label>
-                            <input type="text" name="" id="" placeholder="Enter Your Name" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete required />
+                            <input
+                                {...register("name", {required: true})}
+                                type="text"
+                                name="name" id=""
+                                placeholder="Enter Your Name"
+                                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" />
                         </div>
+                       
 
 
                         <div>
                             <label className="block text-gray-700">Email Address</label>
-                            <input type="email" name="" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete required />
+                            <input
+                                {...register("email", { required: true })}
+                                type="email"
+                                name="email" id=""
+                                placeholder="Enter Email Address"
+                                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" />
                         </div>
 
                         <div className="mt-4">
                             <label className="block text-gray-700">Password</label>
-                            <input type="password" name="" id="" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required />
+                            <input
+                                {...register("password", {required: true})}
+                                type="password"
+                                name="password" id=""
+                                placeholder="Enter Password"
+                                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" />
                         </div>
 
                         <div className="mt-4">
                             <label className="block text-gray-700">Confirm Password</label>
-                            <input type="password" name="" id="" placeholder="Confirm Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required />
+                            <input
+                                {...register('confirmPassword', {required: true})}
+                                type="password"
+                                name="confirmPassword" id=""
+                                placeholder="Confirm Password"
+                                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" />
                         </div>
 
                         <div className="mt-4">
                             <label className="block text-gray-700">
-                                <input type="file" className="sr-only" accept="image/*"/>
+                                <input
+                                    {...register('photo')}
+                                    type="file"
+                                    onChange={(e)=>setImgName(e.target.files[0].name)}
+                                    className="sr-only"
+                                    accept="image/*" required />
                                 Profile Picture
+
                                 <div className='bg-sky-400 text-white border border-gray-300 rounded font-semibold cursor-pointer w-fit p-1 px-3 hover:bg-sky-500'>
-                                    Upload Image
+                                    {imgName}
                                 </div>
                             </label>
 
                         </div>
 
-
+                        {errors.confirmPassword && <p className="text-red-400 mt-3">{errors.confirmPassword.message}</p>}
 
                         <button type="submit" className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6">Log In</button>
                     </form>
+
+
 
                     <hr className="my-6 border-gray-300 w-full" />
 

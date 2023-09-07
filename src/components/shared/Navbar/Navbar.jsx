@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Auth/AuthProvider";
 
 const Navbar = () => {
-    const user = false
+    const {user} = useContext(AuthContext)
     return (
         <nav className="container mx-auto flex justify-between items-center border">
             <div className="flex items-center gap-3">
