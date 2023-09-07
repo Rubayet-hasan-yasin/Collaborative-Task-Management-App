@@ -1,6 +1,6 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaArrowRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../Auth/AuthProvider";
 import { useForm } from 'react-hook-form';
@@ -8,7 +8,8 @@ import { useForm } from 'react-hook-form';
 
 
 const Login = () => {
-    const { logWithEmailAndPassword } = useContext(AuthContext);
+    const { logWithEmailAndPassword, loginWithGoogle } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const {register, handleSubmit, formState: {errors}} = useForm();
 
@@ -19,10 +20,21 @@ const Login = () => {
         logWithEmailAndPassword(email, password)
         .then((r)=>{
             console.log(r.user)
+            navigate('/');
 
         })
         .catch(err=>{
             console.log(err)
+        })
+    }
+
+    const handleGoogleLogin = ()=>{
+        loginWithGoogle()
+        .then(()=>{
+            navigate('/')
+        })
+        .catch(err=>{
+            console.log(err);
         })
     }
 
@@ -79,7 +91,7 @@ const Login = () => {
                     <hr className="my-6 border-gray-300 w-full" />
 
 
-                    <button type="button" className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300">
+                    <button onClick={handleGoogleLogin} type="button" className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300">
                         <div className="flex items-center justify-center">
                             <FcGoogle size={30} />
                             <span className="ml-4">
