@@ -11,6 +11,7 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(false);
     const [teams, setTeams] = useState([]);
+    const [tasks, setTasks] = useState([]);
 
 
     const registerWithEmailAndPassword = (email, password)=>{
@@ -59,6 +60,8 @@ const AuthProvider = ({children}) => {
         loginWithGoogle,
         setTeams,
         teams,
+        tasks,
+        setTasks,
     }
 
     return (

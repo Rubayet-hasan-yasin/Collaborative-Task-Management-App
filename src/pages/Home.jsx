@@ -10,10 +10,9 @@ import AddTeamspaceModal from "../components/AddTeamspaceModal";
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState({});
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, tasks, setTasks } = useContext(AuthContext);
   const navigate = useNavigate()
 
   // console.log("task", tasks);
@@ -61,7 +60,8 @@ const Home = () => {
 
 
   useEffect(() => {
-    const notExist = tasks?.filter(item => item.id !== tasks.id) || [];
+    const notExist = tasks?.filter(item => item.id !== task.id) || [];
+
 
     if (task.id) {
       localStorage.setItem("tasks", JSON.stringify([task, ...notExist]))

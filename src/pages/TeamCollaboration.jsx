@@ -40,7 +40,7 @@ const TeamCollaboration = () => {
         setTeams(updateTeam)
     }
 
-    console.log(teams);
+    // console.log(teams);
 
 
     return (

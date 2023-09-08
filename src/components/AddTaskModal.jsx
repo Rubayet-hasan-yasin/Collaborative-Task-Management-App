@@ -1,12 +1,16 @@
 import { useForm } from 'react-hook-form';
 import NormalModal from './Modal/NormalModal';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Auth/AuthProvider';
 
 
 const AddTaskModal = ({ isOpen, setIsOpen,setTask }) => {
     const {user} = useContext(AuthContext);
     const { handleSubmit, register, reset } = useForm();
+    const [members, setMembers] = useState([]);
+
+    // console.log(members);
+    
 
     const onSubmit = (data) => {
         console.log(data)
@@ -20,6 +24,23 @@ const AddTaskModal = ({ isOpen, setIsOpen,setTask }) => {
         reset();
         setIsOpen(false);
     }
+
+
+    useEffect(()=>{
+        let allMembers = []
+        const teams = JSON.parse(localStorage.getItem('teams'));
+
+        if(teams){
+            teams?.map(team=>{
+                team?.members.map(member=> {
+    
+                    allMembers.push(member)
+                })
+            })
+        }
+
+        setMembers(allMembers)
+    },[])
 
     return (
         <NormalModal
@@ -68,19 +89,13 @@ const AddTaskModal = ({ isOpen, setIsOpen,setTask }) => {
                     {...register('assignedTo',{required: true})}
                     >
                         <option value={user?.displayName}>Me</option>
-                        <option value="Jahangir Alam">Jahangir Alam</option>
-                        <option value="Hiroshi Tanaka">Hiroshi Tanaka</option>
-                        <option value="Mohammad Rahman">Mohammad Rahman</option>
-                        <option value="Kamal Ahmed">Kamal Ahmed</option>
-                        <option value="Ahmed Khan">Ahmed Khan</option>
-                        <option value="Jahangir Alam">Jahangir Alam</option>
-                        <option value="Harun Mia">Harun Mia</option>
-                        <option value="Arif Hussain">Arif Hussain</option>
-                        <option value="Shahidul Islam">Shahidul Islam</option>
-                        <option value="Nasir Uddin">Nasir Uddin</option>
-                        <option value="Hasan Ali">Hasan Ali</option>
-                        <option value="Aminul Haque">Aminul Haque</option>
-                        <option value="Mahbub Alam">Mahbub Alam</option>
+                        
+                        {
+                            members.map(member=> <option key={member.id} value={member.name}>
+                                {member.name}
+                            </option>)
+                        }
+                        
                     </select>
 
                 </div>

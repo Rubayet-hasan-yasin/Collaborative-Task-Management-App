@@ -27,7 +27,7 @@ const AddteamMemberModal = ({ isOpen, setIsOpen, id }) => {
         let team = teams.find(team => team.id === parseInt(id));
         
         const newTeamMember = {
-            id: team.members.length + 1,
+            id: Math.floor(Math.random() * 9000) + 1000,
             name: memberName
         };
         
