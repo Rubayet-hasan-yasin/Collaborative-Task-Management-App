@@ -42,6 +42,14 @@ const AuthProvider = ({children}) => {
         }
     },[])
 
+    useEffect(()=>{
+        const storedTeams = localStorage.getItem("teams")
+        if(storedTeams){
+            setTeams(JSON.parse(storedTeams))
+        }
+
+    },[setTeams])
+
 
     const info = {
         user,

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import NormalModal from "./Modal/NormalModal";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Auth/AuthProvider";
@@ -38,19 +38,22 @@ const AddTeamspaceModal = ({ isOpen, setIsOpen }) => {
 
         localStorage.setItem("teams", JSON.stringify(updateTeams))
         setNewTeamName('');
+        setIsOpen(false)
+
+        Swal.fire({
+            position: 'top',
+            icon: 'success',
+            title: 'Team created successfully.',
+            showConfirmButton: false,
+            timer: 1500
+        });
       };
       
 
 
     //   add team data in local Storage 
 
-    useEffect(()=>{
-        const storedTeams = localStorage.getItem("teams")
-        if(storedTeams){
-            setTeams(JSON.parse(storedTeams))
-        }
-
-    },[setTeams])
+    
     
     return (
         <div>
