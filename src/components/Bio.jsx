@@ -23,7 +23,7 @@ const Bio = () => {
             localStorage.setItem("bio", bio)
         }
 
-        console.log(fromLocal)
+        // console.log(fromLocal)
     },[bio])
 
 

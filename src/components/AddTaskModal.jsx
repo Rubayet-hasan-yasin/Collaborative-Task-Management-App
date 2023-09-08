@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../Auth/AuthProvider';
 
 
-const AddTaskModal = ({ isOpen, setIsOpen,setTask, task }) => {
+const AddTaskModal = ({ isOpen, setIsOpen,setTask }) => {
     const {user} = useContext(AuthContext);
     const { handleSubmit, register, reset } = useForm();
 

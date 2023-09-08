@@ -3,6 +3,7 @@ import Layout from '../layout/Layout';
 import Home from '../pages/Home';
 import Login from '../pages/login';
 import Register from '../pages/Register';
+import TeamCollaboration from '../pages/TeamCollaboration';
 
 
 const routes = createBrowserRouter([
@@ -13,6 +14,10 @@ const routes = createBrowserRouter([
             {
                 path: '/',
                 element: <Home/>
+            },
+            {
+                path: '/Team',
+                element: <TeamCollaboration/>
             }
         ],
         
@@ -24,7 +29,8 @@ const routes = createBrowserRouter([
     {
         path: '/register',
         element: <Register/>
-    }
+    },
+   
 ])
 
 export default routes;

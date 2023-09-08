@@ -4,10 +4,12 @@ import { AuthContext } from "../../../Auth/AuthProvider";
 import ProfileMenu from "../../ProfileMenu";
 
 const Navbar = () => {
-    const { user } = useContext(AuthContext);
+    const { user, teams } = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
 
-    // console.log(user);
+    console.log(teams);
+
+    
     return (
         <nav className="container mx-auto flex justify-between items-center py-3 px-4 md:px-0">
             <div className="flex items-center gap-3">
