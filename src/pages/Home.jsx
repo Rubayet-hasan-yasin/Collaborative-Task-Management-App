@@ -39,7 +39,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    const notExist = tasks.filter(item=> item.id !== tasks.id) || [];
+    const notExist = tasks?.filter(item=> item.id !== tasks.id) || [];
 
     if(task.id){
       localStorage.setItem("tasks", JSON.stringify([task,...notExist]))
@@ -51,7 +51,7 @@ const Home = () => {
 
   }, [task])
 
-  console.log("tasks", tasks);
+  // console.log("tasks", tasks);
 
 
   return (
@@ -66,7 +66,7 @@ const Home = () => {
       {/* tasks display  */}
       <div className="mt-7 space-y-8">
         {tasks.length > 0 &&
-          tasks.map((item) => <TaskCard key={item.id} item={item}/>)
+          tasks.map((item) => <TaskCard key={item.id} item={item} setTasks={setTasks} userName={user.displayName}/>)
         
         }
       </div>
