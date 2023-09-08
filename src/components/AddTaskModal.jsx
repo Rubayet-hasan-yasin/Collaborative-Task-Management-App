@@ -52,7 +52,8 @@ const AddTaskModal = ({ isOpen, setIsOpen,setTask, task }) => {
                 <div className='flex flex-col mb-5'>
                     <label htmlFor="title" className='mb-2'>Deadline</label>
                     < input
-                    className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                    min={new Date().toISOString().split('T')[0]}
+                    className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none disabledPa"
                     type="date"
                     id='date'
                     {...register('date',{required: true})}

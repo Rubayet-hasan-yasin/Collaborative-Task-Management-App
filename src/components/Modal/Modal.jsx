@@ -35,7 +35,7 @@ export default function Modal({isOpen, setIsOpen, children}) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-fit bg-[#EEEEEE] max-w-md transform overflow-hidden rounded-2xl p-6 text-center shadow-xl transition-all">
+                <Dialog.Panel className="w-fit bg-[#EEEEEE] max-w-md min-w-[20%] transform overflow-hidden rounded-2xl p-6 text-center shadow-xl transition-all">
                   {/* <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"

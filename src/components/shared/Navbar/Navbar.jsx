@@ -9,7 +9,7 @@ const Navbar = () => {
 
     // console.log(user);
     return (
-        <nav className="container mx-auto flex justify-between items-center">
+        <nav className="container mx-auto flex justify-between items-center py-3">
             <div className="flex items-center gap-3">
                 <h4 className="bg-blue-500 w-fit text-2xl px-[22px] py-3 text-white font-bold rounded-full">T</h4>
                 <h3 className="text-2xl font-bold text-blue-500">Task</h3>
