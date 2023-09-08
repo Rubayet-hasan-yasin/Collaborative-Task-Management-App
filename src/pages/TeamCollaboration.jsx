@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../Auth/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import { BsPlus } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
+import { BsPlus, BsTrash3Fill, BsArrowRightShort } from "react-icons/bs";
 import AddTeamspaceModal from "../components/AddTeamspaceModal";
 
 
 const TeamCollaboration = () => {
-    const { teams, user } = useContext(AuthContext);
+    const { teams, user, setTeams } = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate()
 
@@ -32,23 +32,20 @@ const TeamCollaboration = () => {
         }
     }
 
+
+    const handleTeamDelete = id =>{
+        const updateTeam = teams.filter(team=> team.id !== id);
+
+        localStorage.setItem("teams", JSON.stringify(updateTeam));
+        setTeams(updateTeam)
+    }
+
     console.log(teams);
 
 
     return (
         <div className="container mx-auto">
-            {/* <div className="flex mb-5 -space-x-4 justify-center">
-                <img className={`w-10 h-10 border-2 border-white rounded-full ${teams.length >= 1 ? "block" : "hidden"}`} src="https://i.ibb.co/vhHRv1N/154901-OV13-M5-460-ai.png" alt="" />
-
-                <img className={`w-10 h-10 border-2 border-white rounded-full ${teams.length > 1 ? "block" : "hidden"}`} src="https://i.ibb.co/vhHRv1N/154901-OV13-M5-460-ai.png" alt="" />
-
-                <img className={`w-10 h-10 border-2 border-white rounded-full ${teams.length > 2 ? "block" : "hidden"}`} src="https://i.ibb.co/vhHRv1N/154901-OV13-M5-460-ai.png" alt="" />
-
-                {
-                    teams.length > 3 &&
-                    <p className="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600">+{teams.length - 3}</p>
-                }
-            </div> */}
+            
 
             <h3 className="text-4xl font-bold text-gray-600 text-center">Teamspace Home</h3>
 
@@ -60,11 +57,18 @@ const TeamCollaboration = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
                 {
                     teams.map(team => <div
-                    className="bg-red-200"
-                    key={team.id}
+                        className="bg-red-50 px-10 py-5 shadow-xl"
+                        key={team.id}
                     >
                         <p className="">Team Name: {team.name}</p>
                         <p>Member: {team.members.length}</p>
+
+                        <div className="flex justify-between mt-4">
+                            <Link to={`/team/${team.id}`} className="bg-primary text-white px-3 pl-5 py-1 rounded flex items-center hover:bg-[#3c44b3]">View <BsArrowRightShort size={25}/></Link>
+
+                            {/* Delete teams  */}
+                            <button onClick={()=>handleTeamDelete(team.id)} className="bg-red-200 p-3 rounded-full shadow-2xl hover:bg-red-300"><BsTrash3Fill /></button>
+                        </div>
 
                     </div>)
                 }

@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import Login from '../pages/login';
 import Register from '../pages/Register';
 import TeamCollaboration from '../pages/TeamCollaboration';
+import Team from '../pages/Team';
 
 
 const routes = createBrowserRouter([
@@ -16,8 +17,12 @@ const routes = createBrowserRouter([
                 element: <Home/>
             },
             {
-                path: '/Team',
+                path: '/Teamspace',
                 element: <TeamCollaboration/>
+            },
+            {
+                path: '/team/:id',
+                element: <Team/>
             }
         ],
         

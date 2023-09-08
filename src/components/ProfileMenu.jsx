@@ -6,7 +6,7 @@ import Bio from "./Bio";
 import { Link } from "react-router-dom";
 
 const ProfileMenu = ({ isOpen, setIsOpen }) => {
-    const { user, logOut, teams } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext)
 
     const handleLogOut = () => {
         logOut()
@@ -39,7 +39,7 @@ const ProfileMenu = ({ isOpen, setIsOpen }) => {
 
                 <hr className="mt-3" />
 
-                <Link to='/team' onClick={() => setIsOpen(false)} className="flex gap-3 outline-none items-center py-1 hover:bg-[#e0e0e0] w-full"><FiArrowRight />Teamspace</Link>
+                <Link to='/Teamspace' onClick={() => setIsOpen(false)} className="flex gap-3 outline-none items-center py-1 hover:bg-[#e0e0e0] w-full"><FiArrowRight />Teamspace</Link>
                 <hr />
 
 

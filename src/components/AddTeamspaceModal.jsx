@@ -51,7 +51,7 @@ const AddTeamspaceModal = ({ isOpen, setIsOpen }) => {
       
 
 
-    //   add team data in local Storage 
+
 
     
     
@@ -73,15 +73,6 @@ const AddTeamspaceModal = ({ isOpen, setIsOpen }) => {
                             Create Team
                         </button>
                     </div>
-
-                    {/* <div>
-                        <h2 className="text-xl font-bold mb-2">Teams:</h2>
-                        <ul>
-                            {teams.map((team) => (
-                                <li key={team.id} className="mb-1">{team.name}</li>
-                            ))}
-                        </ul>
-                    </div> */}
                 </div>
             </NormalModal>
         </div>
