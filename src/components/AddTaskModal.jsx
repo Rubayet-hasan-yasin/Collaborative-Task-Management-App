@@ -1,14 +1,18 @@
 import { useForm } from 'react-hook-form';
 import NormalModal from './Modal/NormalModal';
+import { useContext } from 'react';
+import { AuthContext } from '../Auth/AuthProvider';
 
 
-const AddTaskModal = ({ isOpen, setIsOpen }) => {
-
+const AddTaskModal = ({ isOpen, setIsOpen,setTask, task }) => {
+    const {user} = useContext(AuthContext);
     const { handleSubmit, register, reset } = useForm();
 
     const onSubmit = (data) => {
         console.log(data)
-
+        data.id = Math.floor(Math.random() * 900) + 100;
+        data.status = "not strated"
+        setTask(data)
         onCancel()
     }
 
@@ -29,7 +33,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                     className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                         type="text"
                         id='title'
-                        {...register('name')}
+                        {...register('title',{required: true})}
 
                     />
 
@@ -38,10 +42,10 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                 <div className='flex flex-col mb-5'>
                     <label htmlFor="title" className='mb-2'>Description</label>
                     <textarea 
-                    className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none resize-none"
                     type="text"
                     id='description'
-                    {...register('description')}
+                    {...register('description',{required: true})}
                     ></textarea>
 
                 </div>
@@ -51,7 +55,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                     className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                     type="date"
                     id='date'
-                    {...register('date')}
+                    {...register('date',{required: true})}
                     />
 
                 </div>
@@ -60,8 +64,9 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                     <label htmlFor="title" className='mb-2'>Assign to</label>
                     <select
                     className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-                    {...register('assignedTo')}
+                    {...register('assignedTo',{required: true})}
                     >
+                        <option value={user?.displayName}>Me</option>
                         <option value="Jahangir Alam">Jahangir Alam</option>
                         <option value="Hiroshi Tanaka">Hiroshi Tanaka</option>
                         <option value="Mohammad Rahman">Mohammad Rahman</option>
@@ -87,7 +92,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                     <select
                     className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                      id="priority"
-                     {...register('priority')}
+                     {...register('priority',{required: true})}
                      >
                         <option defaultValue value="high">High</option>
                         <option value="medium">Medium</option>
